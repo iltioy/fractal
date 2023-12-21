@@ -1,0 +1,28 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    padding: 12px;
+    outline: none;
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+    width: 300px;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.label {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.tip {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #c2c2c2;
+}
