@@ -36,10 +36,13 @@ const SecondForm: React.FC<SecondFormProps> = ({ setSubForm }) => {
     const [checkboxSelected, setCheckboxSelected] = useState<any[]>([]);
     const [selectedRadio, setSelectedRadio] = useState<number | null>(null);
 
-    console.log(selectedRadio);
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSubForm((prevState) => prevState + 1);
+    };
 
     return (
-        <form className={`${styles.multipleInput} `}>
+        <form className={`${styles.multipleInput} `} onSubmit={handleSubmit}>
             <MultipleInput
                 items={multipleSelctItems}
                 setItems={setMultipleSelectItems}
@@ -70,7 +73,8 @@ const SecondForm: React.FC<SecondFormProps> = ({ setSubForm }) => {
                 />
                 <Button
                     id="button-next"
-                    onClick={() => setSubForm((prevState) => prevState + 1)}
+                    onClick={() => {}}
+                    type="submit"
                     title="Далее"
                     variant="filled"
                 />

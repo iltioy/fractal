@@ -1,7 +1,6 @@
 .formPage {
-    width: 900px;
-    height: 821px;
     background: white;
+    width: 900px;
 
     display: flex;
     justify-content: center;
@@ -15,4 +14,12 @@
         display: flex;
         flex-direction: column;
     }
+}
+
+.highPage {
+    height: 821px;
+}
+
+.shortPage {
+    height: 500px;
 }
