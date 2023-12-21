@@ -1,10 +1,17 @@
 import styles from "./infoStyles.module.scss";
-import avatar from "../assets/avatar.jpg";
-import folder from "../assets/folder.png";
-import Input from "../components/Input/Input";
-import Button from "../components/Button/Button";
+import avatar from "../../assets/avatar.jpg";
+import folder from "../../assets/folder.png";
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
+import { useNavigate } from "react-router";
+import { useState } from "react";
 
 const InfoPage = () => {
+    const navigate = useNavigate();
+
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [email, setEmail] = useState("");
+
     return (
         <div className={styles.infoPage}>
             <div className={styles.wrapper}>
@@ -66,10 +73,16 @@ const InfoPage = () => {
                     <Input
                         placeholder="+7 999 999-99-99"
                         id="phone"
-                        name="name"
+                        name="phone"
                         label="Номер телефона"
                         type="text"
+                        setValue={setPhoneNumber}
+                        value={phoneNumber}
                         style={{ marginTop: "24px" }}
+                        inputStyle={{
+                            background: "#F5F5F5",
+                            width: "400px",
+                        }}
                     />
                     <Input
                         placeholder="webstudio.fractal@example.com"
@@ -77,11 +90,22 @@ const InfoPage = () => {
                         name="email"
                         label="Email"
                         type="email"
+                        value={email}
+                        setValue={setEmail}
                         style={{ marginTop: "24px" }}
+                        inputStyle={{
+                            background: "#F5F5F5",
+                            width: "400px",
+                        }}
                     />
 
                     <div style={{ marginTop: "48px" }}>
-                        <Button title="Начать" type="filled" />
+                        <Button
+                            id="button-start"
+                            title="Начать"
+                            variant="filled"
+                            onClick={() => navigate("/form")}
+                        />
                     </div>
                 </form>
             </div>

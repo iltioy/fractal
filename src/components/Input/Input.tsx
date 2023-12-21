@@ -6,9 +6,22 @@ interface InputProps {
     id: string;
     name: string;
     type: HTMLInputTypeAttribute;
+    value: string | number;
+    setValue?: React.Dispatch<React.SetStateAction<string>>;
+
     style?: React.CSSProperties;
-    tip?: string;
+    inputStyle?: React.CSSProperties;
+    tip?: string | undefined | false;
     label?: string;
+
+    handleChange?: {
+        (e: React.ChangeEvent<any>): void;
+        <T_1 = string | React.ChangeEvent<any>>(
+            field: T_1
+        ): T_1 extends React.ChangeEvent<any>
+            ? void
+            : (e: string | React.ChangeEvent<any>) => void;
+    };
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,8 +30,11 @@ const Input: React.FC<InputProps> = ({
     id,
     label,
     style,
+    inputStyle,
     type,
     tip,
+    handleChange,
+    setValue,
 }) => {
     return (
         <div className={styles.wrapper} style={style}>
@@ -34,6 +50,12 @@ const Input: React.FC<InputProps> = ({
                 type={type}
                 className={styles.input}
                 placeholder={placeholder}
+                style={inputStyle}
+                onChange={
+                    handleChange
+                        ? handleChange
+                        : (e) => (setValue ? setValue(e.target.value) : "")
+                }
             />
 
             {tip && <div className={styles.tip}>{tip}</div>}
