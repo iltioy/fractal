@@ -1,10 +1,14 @@
 import styles from "./firstFromStyles.module.scss";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import Input from "../../../components/Input/Input";
-import Button from "../../../components/Button/Button";
-import Select from "../../../components/Select/Select";
+import Input from "../../../../components/Input/Input";
+import Button from "../../../../components/Button/Button";
+import Select from "../../../../components/Select/Select";
 import { useState } from "react";
+
+interface FirstFormProps {
+    setSubForm: React.Dispatch<React.SetStateAction<number>>;
+}
 
 const fromValidationSchema = yup.object({
     nickname: yup
@@ -18,30 +22,38 @@ const fromValidationSchema = yup.object({
     name: yup
         .string()
         .max(50, "Максимум 50 букв")
-        .matches(/^[a-zа-яё]+$/i),
+        .matches(/^[a-zа-яё]+$/i, "Имя должно состоять только из букв"),
     surname: yup
         .string()
         .max(50, "Максимум 50 букв")
-        .matches(/^[a-zа-яё]+$/i),
-    sex: yup.string().oneOf(["man", "woman"]),
+        .matches(/^[a-zа-яё]+$/i, "Фамимия должна состоять только из букв"),
+    sex: yup.string().oneOf(["мужской", "женский"]).required("Выберите пол"),
 });
 
-const FirstForm = () => {
+const FirstForm: React.FC<FirstFormProps> = ({ setSubForm }) => {
     const formFormik = useFormik({
         initialValues: {
             nickname: "",
             name: "",
             surname: "",
+            sex: "",
         },
         validationSchema: fromValidationSchema,
         // validateOnChange: false,
 
         onSubmit: (values, { setErrors }) => {
+            setSubForm((prevState) => prevState + 1);
             console.log(values);
         },
     });
 
     const [sex, setSex] = useState("");
+
+    const handleChangeSex = (option: string) => {
+        setSex(option);
+        console.log(option);
+        formFormik.setFieldValue("sex", option);
+    };
 
     return (
         <form onSubmit={formFormik.handleSubmit}>
@@ -85,8 +97,9 @@ const FirstForm = () => {
                 id="field-sex"
                 label="Пол"
                 options={["мужской", "женский"]}
-                setValue={setSex}
+                handleChange={handleChangeSex}
                 value={sex}
+                tip={formFormik.touched.sex && formFormik.errors.sex}
                 style={{ marginBottom: "88px" }}
             />
 

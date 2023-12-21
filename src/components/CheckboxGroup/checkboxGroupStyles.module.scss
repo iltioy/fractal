@@ -1,0 +1,21 @@
+.checkbox {
+    outline: none;
+    width: 16px;
+    height: 16px;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    align-items: center;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.label {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 8px;
+}

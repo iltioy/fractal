@@ -29,12 +29,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                         }% + 8px)`,
                     }}
                 />
-                {new Array(numOfItems).fill(0).map((item, index) => {
+                {new Array(numOfItems).fill(0).map((_item, index) => {
                     let currId = index + 1;
                     let leftPercentage = (index / (numOfItems - 1)) * 100;
 
                     return (
                         <div
+                            key={index}
                             className={`${styles.point} ${
                                 currId === activeItem
                                     ? styles.activePoint

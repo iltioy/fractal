@@ -2,10 +2,11 @@ import styles from "./formStyles.module.scss";
 import ProgressBar from "../../components/ProggressBar/ProgressBar";
 import { useState } from "react";
 import Input from "../../components/Input/Input";
-import FirstForm from "./forms/FirstForm";
+import FirstForm from "./forms/FirstForm/FirstForm";
+import SecondForm from "./forms/SecondForm/SecondForm";
 
 const FormPage = () => {
-    const [activeItem, setActiveItem] = useState(3);
+    const [activeItem, setActiveItem] = useState(2);
 
     return (
         <div className={styles.formPage}>
@@ -18,7 +19,13 @@ const FormPage = () => {
                 />
 
                 <div className={styles.mainForm}>
-                    <FirstForm />
+                    {activeItem === 1 && (
+                        <FirstForm setSubForm={setActiveItem} />
+                    )}
+
+                    {activeItem === 2 && (
+                        <SecondForm setSubForm={setActiveItem} />
+                    )}
                 </div>
             </div>
         </div>

@@ -6,24 +6,26 @@ interface SelectProps {
     label: string;
     id: string;
     value: string;
-    setValue: React.Dispatch<React.SetStateAction<string>>;
+    handleChange: (option: string) => void;
     options: string[];
     style?: React.CSSProperties;
+    tip?: string | false;
 }
 
 const Select: React.FC<SelectProps> = ({
     label,
     id,
     options,
-    setValue,
     value,
     style,
+    handleChange,
+    tip,
 }) => {
     const [open, setOpen] = useState(false);
 
     const handlePickChoice = (option: string) => {
         setOpen(false);
-        setValue(option);
+        handleChange(option);
     };
 
     return (
@@ -56,6 +58,8 @@ const Select: React.FC<SelectProps> = ({
                     </div>
                 )}
             </div>
+
+            {tip && <div className={styles.tip}>{tip}</div>}
         </div>
     );
 };

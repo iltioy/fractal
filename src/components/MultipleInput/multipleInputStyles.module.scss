@@ -1,0 +1,39 @@
+.item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+
+    img {
+        cursor: pointer;
+    }
+}
+
+.label {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.addButton {
+    width: 44px;
+    height: 44px;
+    border: 2px solid #5558fa;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        height: 20px;
+        width: 20px;
+    }
+}
+
+.itemsWrapper {
+    max-height: 300px;
+    overflow: auto;
+}

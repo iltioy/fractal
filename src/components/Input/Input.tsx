@@ -2,11 +2,11 @@ import { HTMLInputTypeAttribute } from "react";
 import styles from "./inputStyles.module.scss";
 
 interface InputProps {
-    placeholder: string;
-    id: string;
-    name: string;
-    type: HTMLInputTypeAttribute;
-    value: string | number;
+    placeholder?: string;
+    id?: string;
+    name?: string;
+    type?: HTMLInputTypeAttribute;
+    value?: string | number;
     setValue?: React.Dispatch<React.SetStateAction<string>>;
 
     style?: React.CSSProperties;
@@ -22,6 +22,9 @@ interface InputProps {
             ? void
             : (e: string | React.ChangeEvent<any>) => void;
     };
+
+    onChangeMultiple?: (value: string, id?: number) => void;
+    multipleInputId?: number;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -30,11 +33,14 @@ const Input: React.FC<InputProps> = ({
     id,
     label,
     style,
+    value,
     inputStyle,
     type,
     tip,
     handleChange,
     setValue,
+    onChangeMultiple,
+    multipleInputId,
 }) => {
     return (
         <div className={styles.wrapper} style={style}>
@@ -51,8 +57,12 @@ const Input: React.FC<InputProps> = ({
                 className={styles.input}
                 placeholder={placeholder}
                 style={inputStyle}
+                value={value}
                 onChange={
-                    handleChange
+                    onChangeMultiple
+                        ? (e) =>
+                              onChangeMultiple(e.target.value, multipleInputId)
+                        : handleChange
                         ? handleChange
                         : (e) => (setValue ? setValue(e.target.value) : "")
                 }

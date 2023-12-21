@@ -1,0 +1,19 @@
+.label {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 20px;
+
+    .radio {
+        margin-right: 8px;
+        width: 16px;
+        height: 16px;
+    }
+}
