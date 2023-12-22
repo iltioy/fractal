@@ -7,7 +7,7 @@ import SecondForm from "./forms/SecondForm/SecondForm";
 import ThirdForm from "./forms/ThirdFrom/ThirdForm";
 
 const FormPage = () => {
-    const [activeItem, setActiveItem] = useState(2);
+    const [activeItem, setActiveItem] = useState(3);
 
     return (
         <div
@@ -24,17 +24,11 @@ const FormPage = () => {
                 />
 
                 <div className={`${styles.mainForm} `}>
-                    {activeItem === 1 && (
-                        <FirstForm setSubForm={setActiveItem} />
-                    )}
+                    {activeItem === 1 && <FirstForm setSubForm={setActiveItem} />}
 
-                    {activeItem === 2 && (
-                        <SecondForm setSubForm={setActiveItem} />
-                    )}
+                    {activeItem === 2 && <SecondForm setSubForm={setActiveItem} />}
 
-                    {activeItem === 3 && (
-                        <ThirdForm setSubForm={setActiveItem} />
-                    )}
+                    {activeItem === 3 && <ThirdForm setSubForm={setActiveItem} />}
                 </div>
             </div>
         </div>

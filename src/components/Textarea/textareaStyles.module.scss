@@ -1,0 +1,42 @@
+.textarea {
+    width: calc(100% - 24px);
+    resize: vertical;
+    min-height: 84px;
+    max-height: 120px;
+    height: 84px;
+    outline: none;
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+    padding: 12px;
+
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.label {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.tip {
+    font-size: 12px;
+    line-height: 16px;
+    color: #c2c2c2;
+}
+
+.bottomArea {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #c2c2c2;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.wordsCount {
+    color: #c2c2c2;
+    margin-left: auto;
+}

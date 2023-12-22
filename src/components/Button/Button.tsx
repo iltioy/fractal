@@ -5,16 +5,10 @@ interface ButtonProps {
     variant: "outlined" | "filled";
     type?: "button" | "reset" | "submit" | undefined;
     id: string;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({
-    title,
-    type,
-    id,
-    onClick,
-    variant,
-}) => {
+const Button: React.FC<ButtonProps> = ({ title, type, id, onClick, variant }) => {
     return (
         <button
             id={id}
