@@ -5,23 +5,66 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/store";
+import { setValues } from "../../features/form/formSlice";
 
 const InfoPage = () => {
     const navigate = useNavigate();
 
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [email, setEmail] = useState("");
+    const dispatch = useAppDispatch();
+    const { phoneNumber: initialPhoneNumber, email: initialEmail } = useSelector(
+        (state: RootState) => state.form
+    );
+
+    const [phoneNumber, setPhoneNumber] = useState(initialPhoneNumber);
+    const [email, setEmail] = useState(initialEmail);
+
+    const [phoneNumberError, setPhoneNumberError] = useState("");
+
+    const handlePhoneNumberChange = (newVal: string) => {
+        let numbers = "+" + newVal.replace(/[^0-9]/g, "");
+        if (numbers.length > 12) return;
+
+        let maskedNumber = "+7 ";
+        for (let i = 2; i < numbers.length; i++) {
+            if (i === 2) {
+                maskedNumber += "(";
+            } else if (i === 5) {
+                maskedNumber += ") ";
+            } else if (i === 8 || i === 10) {
+                maskedNumber += "-";
+            }
+
+            maskedNumber += numbers[i];
+        }
+
+        setPhoneNumber(maskedNumber);
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (phoneNumber.length !== 18) {
+            setPhoneNumberError("Введите номер телефона!");
+            return;
+        }
+
+        dispatch(
+            setValues({
+                phoneNumber,
+                email,
+            })
+        );
+        navigate("/form");
+    };
 
     return (
         <div className={styles.infoPage}>
             <div className={styles.wrapper}>
                 <div className={styles.headerWrapper}>
                     <div className={styles.header}>
-                        <img
-                            src={avatar}
-                            alt="avatar"
-                            className={styles.avatar}
-                        />
+                        <img src={avatar} alt="avatar" className={styles.avatar} />
 
                         <div className={styles.headerInfo}>
                             <div
@@ -38,7 +81,7 @@ const InfoPage = () => {
                                 <div className={styles.item}>
                                     <img src={folder} alt="folder" />
                                     <a
-                                        href="#"
+                                        href="https://t.me/mrcorss"
                                         style={{ textDecoration: "none" }}
                                     >
                                         Telegram
@@ -48,7 +91,7 @@ const InfoPage = () => {
                                 <div className={styles.item}>
                                     <img src={folder} alt="folder" />
                                     <a
-                                        href="#"
+                                        href="https://github.com/iltioy"
                                         style={{ textDecoration: "none" }}
                                     >
                                         GitHub
@@ -58,7 +101,7 @@ const InfoPage = () => {
                                 <div className={styles.item}>
                                     <img src={folder} alt="folder" />
                                     <a
-                                        href="#"
+                                        href="https://hh.ru/resume/56a81c83ff0c07c8360039ed1f4b556e77726b"
                                         style={{ textDecoration: "none" }}
                                     >
                                         Резюме
@@ -69,20 +112,23 @@ const InfoPage = () => {
                     </div>
                 </div>
 
-                <form action="" className="infoForm">
+                <form action="" className="infoForm" onSubmit={handleSubmit}>
                     <Input
                         placeholder="+7 999 999-99-99"
                         id="phone"
                         name="phone"
                         label="Номер телефона"
                         type="text"
-                        setValue={setPhoneNumber}
+                        handleChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handlePhoneNumberChange(e.target.value)
+                        }
                         value={phoneNumber}
                         style={{ marginTop: "24px" }}
                         inputStyle={{
                             background: "#F5F5F5",
                             width: "400px",
                         }}
+                        tip={phoneNumberError}
                     />
                     <Input
                         placeholder="webstudio.fractal@example.com"
@@ -100,12 +146,7 @@ const InfoPage = () => {
                     />
 
                     <div style={{ marginTop: "48px" }}>
-                        <Button
-                            id="button-start"
-                            title="Начать"
-                            variant="filled"
-                            onClick={() => navigate("/form")}
-                        />
+                        <Button id="button-start" title="Начать" variant="filled" type="submit" />
                     </div>
                 </form>
             </div>

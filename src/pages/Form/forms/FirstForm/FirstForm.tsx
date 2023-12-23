@@ -4,7 +4,11 @@ import { useFormik } from "formik";
 import Input from "../../../../components/Input/Input";
 import Button from "../../../../components/Button/Button";
 import Select from "../../../../components/Select/Select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { RootState, useAppDispatch } from "../../../../store/store";
+import { useSelector } from "react-redux";
+import { setValues } from "../../../../features/form/formSlice";
 
 interface FirstFormProps {
     setSubForm: React.Dispatch<React.SetStateAction<number>>;
@@ -14,46 +18,60 @@ const fromValidationSchema = yup.object({
     nickname: yup
         .string()
         .max(30, "Максимальная длинна никнейма - 30 символов")
-        .matches(
-            /^[a-zа-яё0-9]+$/i,
-            "Никнейм должен состоять только из букв и цифр"
-        )
+        .matches(/^[a-zа-яё0-9]+$/i, "Никнейм должен состоять только из букв и цифр")
         .required("Введите никнейм"),
     name: yup
         .string()
         .max(50, "Максимум 50 букв")
-        .matches(/^[a-zа-яё]+$/i, "Имя должно состоять только из букв"),
+        .matches(/^[a-zа-яё]+$/i, "Имя должно состоять только из букв")
+        .required("Введите имя"),
     surname: yup
         .string()
         .max(50, "Максимум 50 букв")
-        .matches(/^[a-zа-яё]+$/i, "Фамимия должна состоять только из букв"),
+        .matches(/^[a-zа-яё]+$/i, "Фамимия должна состоять только из букв")
+        .required("Введите фамилию"),
     sex: yup.string().oneOf(["мужской", "женский"]).required("Выберите пол"),
 });
 
 const FirstForm: React.FC<FirstFormProps> = ({ setSubForm }) => {
+    const dispatch = useAppDispatch();
+    const {
+        nickname: initialNickname,
+        name: initialName,
+        surname: initialSurname,
+        sex: initialSex,
+    } = useSelector((state: RootState) => state.form);
+
     const formFormik = useFormik({
         initialValues: {
-            nickname: "",
-            name: "",
-            surname: "",
-            sex: "",
+            nickname: initialNickname,
+            name: initialName,
+            surname: initialSurname,
+            sex: initialSex,
         },
         validationSchema: fromValidationSchema,
         // validateOnChange: false,
 
         onSubmit: (values, { setErrors }) => {
             setSubForm((prevState) => prevState + 1);
-            console.log(values);
+            dispatch(setValues(values));
         },
     });
 
-    const [sex, setSex] = useState("");
+    const [sex, setSex] = useState(initialSex);
+    const navigate = useNavigate();
 
     const handleChangeSex = (option: string) => {
         setSex(option);
-        console.log(option);
         formFormik.setFieldValue("sex", option);
     };
+
+    useEffect(() => {
+        return () => {
+            const { values } = formFormik;
+            dispatch(setValues(values));
+        };
+    }, [formFormik]);
 
     return (
         <form onSubmit={formFormik.handleSubmit}>
@@ -105,20 +123,15 @@ const FirstForm: React.FC<FirstFormProps> = ({ setSubForm }) => {
 
             <div className={styles.buttons}>
                 <Button
-                    type="submit"
                     variant="outlined"
                     id="button-back"
-                    onClick={() => {}}
+                    onClick={() => {
+                        navigate("/");
+                    }}
                     title="Назад"
                 />
 
-                <Button
-                    id="button-next"
-                    title="Далее"
-                    variant="filled"
-                    type="submit"
-                    onClick={() => {}}
-                />
+                <Button id="button-next" title="Далее" variant="filled" type="submit" />
             </div>
         </form>
     );

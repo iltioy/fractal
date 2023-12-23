@@ -12,15 +12,7 @@ interface SelectProps {
     tip?: string | false;
 }
 
-const Select: React.FC<SelectProps> = ({
-    label,
-    id,
-    options,
-    value,
-    style,
-    handleChange,
-    tip,
-}) => {
+const Select: React.FC<SelectProps> = ({ label, id, options, value, style, handleChange, tip }) => {
     const [open, setOpen] = useState(false);
 
     const handlePickChoice = (option: string) => {
@@ -32,13 +24,9 @@ const Select: React.FC<SelectProps> = ({
         <div id={id} style={style}>
             {label && <div className={styles.label}>{label}</div>}
 
-            <div className={styles.select}>
-                <div className={styles.title} onClick={() => setOpen(!open)}>
-                    {value ? (
-                        value
-                    ) : (
-                        <span className={styles.nochoice}>Не выбрано</span>
-                    )}
+            <div className={styles.select} onClick={() => setOpen(!open)}>
+                <div className={styles.title}>
+                    {value ? value : <span className={styles.nochoice}>Не выбрано</span>}
                     <div>
                         <img src={selectTick} alt="" />
                     </div>
@@ -49,7 +37,10 @@ const Select: React.FC<SelectProps> = ({
                         {options.map((option, index) => (
                             <div
                                 className={styles.option}
-                                onClick={() => handlePickChoice(option)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handlePickChoice(option);
+                                }}
                                 key={option}
                             >
                                 {option}

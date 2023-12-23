@@ -24,8 +24,15 @@ body {
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.App {
+    padding-bottom: 50px;
+}
+
+.hideOverflow {
+    overflow: hidden;
 }
 
 .hiddenScroll::-webkit-scrollbar {

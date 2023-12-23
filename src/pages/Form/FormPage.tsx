@@ -7,7 +7,7 @@ import SecondForm from "./forms/SecondForm/SecondForm";
 import ThirdForm from "./forms/ThirdFrom/ThirdForm";
 
 const FormPage = () => {
-    const [activeItem, setActiveItem] = useState(3);
+    const [activeItem, setActiveItem] = useState(1);
 
     return (
         <div

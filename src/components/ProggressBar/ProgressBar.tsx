@@ -24,9 +24,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                 <div
                     className={styles.progress}
                     style={{
-                        width: `calc(${
-                            ((activeItem - 1) / (numOfItems - 1)) * 100
-                        }% + 8px)`,
+                        width: `calc(${((activeItem - 1) / (numOfItems - 1)) * 100}% + 8px)`,
                     }}
                 />
                 {new Array(numOfItems).fill(0).map((_item, index) => {
@@ -60,6 +58,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
                     return (
                         <div
+                            key={index}
                             className={styles.item}
                             style={{ left: `calc(${leftPercentage}% - 3px)` }}
                         >

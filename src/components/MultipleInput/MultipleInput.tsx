@@ -15,12 +15,7 @@ interface MultipleInputProps {
     style?: React.CSSProperties;
 }
 
-const MultipleInput: React.FC<MultipleInputProps> = ({
-    label,
-    items,
-    setItems,
-    style,
-}) => {
+const MultipleInput: React.FC<MultipleInputProps> = ({ label, items, setItems, style }) => {
     const handleItemChange = (value: string, id?: number) => {
         setItems((prevState) => {
             const newState = prevState.map((item) => {
@@ -36,9 +31,6 @@ const MultipleInput: React.FC<MultipleInputProps> = ({
 
             return newState;
         });
-
-        console.log(value);
-        console.log(items);
     };
 
     return (
@@ -60,11 +52,8 @@ const MultipleInput: React.FC<MultipleInputProps> = ({
                             id={`button-remove-${index}`}
                             alt="delete"
                             onClick={() => {
-                                console.log(items);
                                 setItems((prevState) =>
-                                    prevState.filter(
-                                        (delItem) => delItem.id !== item.id
-                                    )
+                                    prevState.filter((delItem) => delItem.id !== item.id)
                                 );
                             }}
                         />
@@ -77,9 +66,7 @@ const MultipleInput: React.FC<MultipleInputProps> = ({
                     onClick={() =>
                         setItems((prevItems) => {
                             let maxId = 0;
-                            prevItems.forEach(({ id }) =>
-                                id > maxId ? (maxId = id) : null
-                            );
+                            prevItems.forEach(({ id }) => (id > maxId ? (maxId = id) : null));
                             return [...prevItems, { id: maxId + 1, value: "" }];
                         })
                     }

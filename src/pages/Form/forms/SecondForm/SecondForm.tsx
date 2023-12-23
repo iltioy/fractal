@@ -1,45 +1,57 @@
 import styles from "./secondFormStyles.module.scss";
 import MultipleInput from "../../../../components/MultipleInput/MultipleInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckboxGroup from "../../../../components/CheckboxGroup/CheckboxGroup";
 import RadioGroup from "../../../../components/RadioGroup/RadioGroup";
 import Button from "../../../../components/Button/Button";
+import { RootState, useAppDispatch } from "../../../../store/store";
+import { useSelector } from "react-redux";
+import { setValues } from "../../../../features/form/formSlice";
 
 interface SecondFormProps {
     setSubForm: React.Dispatch<React.SetStateAction<number>>;
 }
-
-const defaultMultipleSelectItems = [
-    {
-        id: 1,
-        value: "",
-    },
-    {
-        id: 2,
-        value: "",
-    },
-    {
-        id: 3,
-        value: "",
-    },
-];
 
 const checkboxValues = [1, 2, 3];
 
 const radioValues = [1, 2, 3];
 
 const SecondForm: React.FC<SecondFormProps> = ({ setSubForm }) => {
-    const [multipleSelctItems, setMultipleSelectItems] = useState(
-        defaultMultipleSelectItems
-    );
+    const dispatch = useAppDispatch();
+    const {
+        advantages: initialAdvantages,
+        checkbox: initialCheckbox,
+        radio: initialRadio,
+    } = useSelector((store: RootState) => store.form);
 
-    const [checkboxSelected, setCheckboxSelected] = useState<any[]>([]);
-    const [selectedRadio, setSelectedRadio] = useState<number | null>(null);
+    const [multipleSelctItems, setMultipleSelectItems] = useState(initialAdvantages);
+
+    const [checkboxSelected, setCheckboxSelected] = useState<any[]>(initialCheckbox);
+    const [selectedRadio, setSelectedRadio] = useState<number | null>(initialRadio);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        dispatch(
+            setValues({
+                checkbox: checkboxSelected,
+                radio: selectedRadio,
+                advantages: multipleSelctItems,
+            })
+        );
         setSubForm((prevState) => prevState + 1);
     };
+
+    useEffect(() => {
+        return () => {
+            dispatch(
+                setValues({
+                    checkbox: checkboxSelected,
+                    radio: selectedRadio,
+                    advantages: multipleSelctItems,
+                })
+            );
+        };
+    }, [checkboxSelected, selectedRadio, multipleSelctItems]);
 
     return (
         <form className={`${styles.multipleInput} `} onSubmit={handleSubmit}>
@@ -53,6 +65,7 @@ const SecondForm: React.FC<SecondFormProps> = ({ setSubForm }) => {
             <CheckboxGroup
                 items={checkboxValues}
                 setSelectedItems={setCheckboxSelected}
+                selectedItems={checkboxSelected}
                 label="Checbox группа"
                 style={{ marginBottom: "24px" }}
             />
@@ -61,6 +74,7 @@ const SecondForm: React.FC<SecondFormProps> = ({ setSubForm }) => {
                 label="Radio группа"
                 items={radioValues}
                 setSelected={setSelectedRadio}
+                selected={selectedRadio}
                 style={{ marginBottom: "64px" }}
             />
 
