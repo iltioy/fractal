@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/fractal/static/css/main.36c222bf.css",
+    "main.js": "/fractal/static/js/main.07c56deb.js",
+    "static/media/avatar.jpg": "/fractal/static/media/avatar.a35ea4ae49edb1be41b0.jpg",
+    "static/media/TTTravels-Regular.ttf": "/fractal/static/media/TTTravels-Regular.92a0c3030c288ad87583.ttf",
+    "index.html": "/fractal/index.html",
+    "main.36c222bf.css.map": "/fractal/static/css/main.36c222bf.css.map",
+    "main.07c56deb.js.map": "/fractal/static/js/main.07c56deb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.36c222bf.css",
+    "static/js/main.07c56deb.js"
+  ]
+}
